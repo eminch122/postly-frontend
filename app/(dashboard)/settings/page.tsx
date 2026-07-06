@@ -1,8 +1,12 @@
+import { Suspense } from "react"
 import { SettingsPage } from "@/components/pages/settings-page"
 
-export const dynamic = "force-dynamic"
 export const metadata = { title: "Settings — Postly" }
 
 export default function Settings() {
-  return <SettingsPage />
+  return (
+    <Suspense fallback={null}>
+      <SettingsPage />
+    </Suspense>
+  )
 }

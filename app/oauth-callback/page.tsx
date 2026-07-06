@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { Suspense, useEffect } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { Loader2 } from 'lucide-react'
 import { useAuth } from '@/lib/auth-context'
@@ -19,7 +19,7 @@ import { useAuth } from '@/lib/auth-context'
  * redirect before the session cookie is available (causing a redirect to /login).
  * It also strips Facebook's legacy #_=_ hash fragment transparently.
  */
-export default function OAuthCallbackPage() {
+function OAuthCallbackContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const { refreshUser } = useAuth()
@@ -61,5 +61,17 @@ export default function OAuthCallbackPage() {
         <p className="text-sm text-muted-foreground">Completing connection…</p>
       </div>
     </div>
+  )
+}
+
+export default function OAuthCallbackPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Loader2 className="w-8 h-8 text-brand animate-spin mx-auto" />
+      </div>
+    }>
+      <OAuthCallbackContent />
+    </Suspense>
   )
 }
