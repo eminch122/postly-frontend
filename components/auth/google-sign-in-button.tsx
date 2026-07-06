@@ -71,7 +71,7 @@ export function GoogleSignInButton({ text = "continue_with", onSuccess, onError 
   const [ready, setReady] = useState(false)
   const initializedRef = useRef(false)
 
-  const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
+  const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID?.trim()
 
   const handleCredential = useCallback(
     async (resp: { credential: string }) => {
